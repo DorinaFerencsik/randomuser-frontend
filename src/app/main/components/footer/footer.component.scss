@@ -1,0 +1,9 @@
+@import '_media-queries';
+
+:host {
+  height: 6rem;
+
+  @include lt-md {
+    height: 4rem;
+  }
+}
