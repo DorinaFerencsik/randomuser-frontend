@@ -1,3 +1,5 @@
+import { ILocation } from 'src/app/shared/interfaces/location.interface';
+
 import { ILogin } from './login.interface';
 
 export interface IUser {
@@ -11,7 +13,7 @@ export interface IUser {
     name: string,
     value: string,
   };
-  location: any;
+  location: ILocation;
   login: ILogin;
   name: {
     title: string,

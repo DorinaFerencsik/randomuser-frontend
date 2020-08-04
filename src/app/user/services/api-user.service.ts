@@ -13,7 +13,7 @@ export class ApiUserService {
 
   constructor(private httpClient: CustomHttpClient) {}
 
-  public getUserList(): Observable<IListResponse<IUser>[]> {
-    return this.httpClient.get('');
+  public getUserList(params: any): Observable<IListResponse<IUser>> {
+    return this.httpClient.get('', { params });
   }
 }
