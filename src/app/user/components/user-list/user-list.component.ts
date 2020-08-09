@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 
 import { IPagination } from 'src/app/shared/interfaces/pagination.interface';
 
 import { Gender } from '../../enums/gender.enum';
-import { ApiUserService } from '../../services/api-user.service';
 import { IUser } from '../../interfaces/user.interface';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
   public userList$: Observable<IUser[]>;
 
   constructor(
-    private userService: ApiUserService,
+    private userService: UserService,
     private formBuilder: FormBuilder
   ) {
     this.filterForm = this.formBuilder.group({
@@ -44,13 +44,21 @@ export class UserListComponent implements OnInit {
   }
 
   public onFilter() {
-    this.userList$ = this.userService
-      .getUserList({
-        ...this.pagination,
-        ...this.filterForm.value
-      }).pipe(
-        tap(resposne => this.pagination.results = resposne.info.results),
-        map(response => response.results)
-      );
+    // POLLING
+    this.userList$ = this.userService.getUsers({
+      ...this.pagination,
+      ...this.filterForm.value
+    });
+
+    // MOCKING
+    // this.userList$ = this.userService
+    //   .getMockedUsers({
+    //     ...this.pagination,
+    //     ...this.filterForm.value
+    //   });
+  }
+
+  onPageChange(event: PageEvent) {
+    console.log('page changed: ', event);
   }
 }

@@ -22,6 +22,13 @@
 
 <mat-card *ngIf="userList$ | async as users" class="user-container">
   <mat-card-content>
+    <mat-paginator
+    [pageSize]="pagination.results"
+    [pageIndex]="pagination.page - 1"
+      [hidePageSize]="true"
+      [showFirstLastButtons]="false"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
     <mat-table [dataSource]="users">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
