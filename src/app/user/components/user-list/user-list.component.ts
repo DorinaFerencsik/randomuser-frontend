@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
+import { tap, finalize } from 'rxjs/operators';
 
 import { IPagination } from 'src/app/shared/interfaces/pagination.interface';
 
 import { Gender } from '../../enums/gender.enum';
 import { IUser } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
+import { LoadingService } from 'src/app/main/services/loading.service';
 
 @Component({
   selector: 'app-user-list',
@@ -28,37 +30,43 @@ export class UserListComponent implements OnInit {
     page: 1,
     results: 10,
   };
+  public dataLength: number;
+  public userList: IUser[];
 
-  public userList$: Observable<IUser[]>;
+  private readonly defaultLength = 100;
 
   constructor(
     private userService: UserService,
+    private loadingService: LoadingService,
     private formBuilder: FormBuilder
   ) {
     this.filterForm = this.formBuilder.group({
       gender: [''],
+      useMock: ['']
     });
   }
 
   public ngOnInit(): void {
+    this.dataLength = this.defaultLength;
   }
 
   public onFilter() {
-    // POLLING
-    this.userList$ = this.userService.getUsers({
-      ...this.pagination,
-      ...this.filterForm.value
-    });
+    const { gender, useMock } = this.filterForm.value;
+    this.loadingService.startLoading();
+    this.userService.getUsers({
+        ...this.pagination,
+        gender
+      },
+      useMock,
+    ).pipe(
+      tap(() => this.dataLength = this.defaultLength + this.pagination.page * this.pagination.results),
+      finalize(() => this.loadingService.stopLoading())
+    ).subscribe(result => this.userList = result);
 
-    // MOCKING
-    // this.userList$ = this.userService
-    //   .getMockedUsers({
-    //     ...this.pagination,
-    //     ...this.filterForm.value
-    //   });
   }
 
   onPageChange(event: PageEvent) {
-    console.log('page changed: ', event);
+    this.pagination.page = event.pageIndex + 1;
+    this.onFilter();
   }
 }

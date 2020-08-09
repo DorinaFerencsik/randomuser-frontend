@@ -14,22 +14,28 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-slide-toggle
+          formControlName="useMock"
+          color="primary">
+          Use mock postcodes
+        </mat-slide-toggle>
       </div>
       <button mat-raised-button color="primary" [disabled]="!filterForm.valid">Filter</button>
     </form>
   </mat-card-content>
 </mat-card>
 
-<mat-card *ngIf="userList$ | async as users" class="user-container">
+<mat-card *ngIf="userList" class="user-container">
   <mat-card-content>
     <mat-paginator
-    [pageSize]="pagination.results"
-    [pageIndex]="pagination.page - 1"
+      [pageSize]="pagination.results"
+      [pageIndex]="pagination.page - 1"
+      [length]="dataLength"
       [hidePageSize]="true"
       [showFirstLastButtons]="false"
       (page)="onPageChange($event)"
     ></mat-paginator>
-    <mat-table [dataSource]="users">
+    <mat-table [dataSource]="userList">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>

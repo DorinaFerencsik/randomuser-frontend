@@ -23,10 +23,19 @@ export class UserService {
   constructor(private api: ApiUserService) {}
 
   /**
-   * Polling the API for users with atleast 2 prime numbers in their post code.
+   * Listing users from API
+   * @param params filtering parameters
+   * @param mock wether to use mock data or polling for getting users with right postcode.
+   */
+  public getUsers(params: IUserRequest, mock = false){
+    return mock ? this.getMockedUsers(params) : this.getUsersWithPolling(params);
+  }
+
+  /**
+   * Polling the API for users with atleast 2 prime numbers in their postcode.
    * @param params filtering parameters
    */
-  public getUsers(params: IUserRequest){
+  private getUsersWithPolling(params: IUserRequest): Observable<IUser[]> {
     const res: IUser[] = [];
     return timer(0, 500).pipe(
       switchMap(() => this.api.getUserList(params).pipe(map(response => response.results))),
@@ -40,10 +49,10 @@ export class UserService {
   }
 
   /**
-   * Listing users and changing their post codes with mocked values, which contains 2 prime numbers.
+   * Listing users and changing their postcodes with mocked values, which contains 2 prime numbers.
    * @param params filtering parameters
    */
-  public getMockedUsers(params: IUserRequest): Observable<IUser[]> {
+  private getMockedUsers(params: IUserRequest): Observable<IUser[]> {
     this.generatePostCode();
     return this.api.getUserList(params).pipe(
       map((result) => (result.results.map(user => ({
@@ -71,7 +80,7 @@ export class UserService {
   }
 
   /**
-   * Generating 4 digit post codes with 2 prime numbers and one random value
+   * Generating 4 digit postcodes with 2 prime numbers and one random value
    */
   private generatePostCode() {
     const parts = [
