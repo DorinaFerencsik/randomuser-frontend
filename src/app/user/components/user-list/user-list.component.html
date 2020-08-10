@@ -4,8 +4,8 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
-      <div fxLayout="row">
-        <mat-form-field>
+      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+        <mat-form-field fxFlex="calc(100%/3-20px)">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender">
             <mat-option></mat-option>
@@ -16,9 +16,11 @@
         </mat-form-field>
         <mat-slide-toggle
           formControlName="useMock"
+          fxFlex="calc(100%/3-20px)"
           color="primary">
           Use mock postcodes
         </mat-slide-toggle>
+        <div #offset fxFlex="calc(100%/3-20px)"></div>
       </div>
       <button mat-raised-button color="primary" [disabled]="!filterForm.valid">Filter</button>
     </form>

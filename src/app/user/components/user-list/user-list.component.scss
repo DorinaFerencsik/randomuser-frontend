@@ -17,4 +17,8 @@
   &-gender {
     @include column-width(60px);
   }
+  &-email {
+    @include column-width(230px);
+    word-break: break-word;
+  }
 }

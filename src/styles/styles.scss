@@ -1,11 +1,31 @@
+@import '_variables';
+
 html, body {
   height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: Roboto,
-  "Helvetica Neue", sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: $app-background-light;
+}
+
+a {
+  color: $app-primary;
+  text-decoration: none;
+
+  &:visited {
+    color: $app-primary-dark;
+  }
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+div.mat-card-header-text {
+  margin: 0;
 }
 
 mat-table {
@@ -16,8 +36,6 @@ mat-table {
 }
 
 mat-paginator.unknown-length {
-  padding-bottom: 30px;
-
   .mat-paginator-range-label::after {
     content: "+";
   }

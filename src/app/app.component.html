@@ -1,16 +1,14 @@
 <div class="app-container" fxLayout="column">
   <app-loading-overlay *ngIf="isLoading"></app-loading-overlay>
   <app-header></app-header>
-  <div
-    class="content-wrapper"
-    fxFlex
-    fxLayout="row"
-    fxLayoutAlign="center">
-    <div
-      fxFlex="70%"
-      fxFlex.lt-md="80%"
-      fxFlex.lt-sm="95%">
-      <router-outlet></router-outlet>
+  <div class="content-wrapper"
+       fxFlex
+       fxLayout="row"
+       fxLayoutAlign="center">
+    <div fxFlex="70%"
+         fxFlex.lt-md="80%"
+         fxFlex.lt-sm="95%">
+    <router-outlet></router-outlet>
     </div>
   </div>
   <app-footer></app-footer>
