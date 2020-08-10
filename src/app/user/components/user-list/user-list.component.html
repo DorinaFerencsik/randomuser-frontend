@@ -1,1 +1,86 @@
-<p>user-list works!</p>
+<mat-card class="filter-container">
+  <mat-card-header>
+    <mat-card-title>User list</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
+      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+        <mat-form-field fxFlex="calc(100%/3-20px)">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let opt of genders | enumToArray" [value]="opt.key">
+              {{opt.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-slide-toggle
+          formControlName="useMock"
+          fxFlex="calc(100%/3-20px)"
+          color="primary">
+          Use mock postcodes
+        </mat-slide-toggle>
+        <div #offset fxFlex="calc(100%/3-20px)"></div>
+      </div>
+      <button mat-raised-button color="primary" [disabled]="!filterForm.valid">Filter</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="userList" class="user-container">
+  <mat-card-content>
+    <mat-paginator
+      class="unknown-length"
+      [pageSize]="pagination.results"
+      [pageIndex]="pagination.page - 1"
+      [length]="dataLength"
+      [hidePageSize]="true"
+      [showFirstLastButtons]="false"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+    <mat-table [dataSource]="userList">
+      <ng-container matColumnDef="picture">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <img [src]="user.picture.thumbnail">
+        </mat-cell>
+      </ng-container>
+
+      <!-- Name column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.name.title}} {{user.name.first}} {{user.name.last}}</mat-cell>
+      </ng-container>
+
+      <!-- Gender column -->
+      <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef> Gender </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.gender}} </mat-cell>
+      </ng-container>
+
+      <!-- Email column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+      </ng-container>
+
+      <!-- Address column -->
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.location.postcode }} {{ user.location.country }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator
+      class="unknown-length"
+      [pageSize]="pagination.results"
+      [pageIndex]="pagination.page - 1"
+      [length]="dataLength"
+      [hidePageSize]="true"
+      [showFirstLastButtons]="false"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>

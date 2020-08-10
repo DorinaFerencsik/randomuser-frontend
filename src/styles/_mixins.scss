@@ -1,0 +1,4 @@
+@mixin column-width ($width: 150px) {
+  min-width: $width;
+  max-width: $width;
+}

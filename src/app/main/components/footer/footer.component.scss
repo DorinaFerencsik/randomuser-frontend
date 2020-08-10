@@ -1,0 +1,43 @@
+@import '_media-queries';
+@import '_variables';
+
+:host {
+  min-height: 6rem;
+
+  @include lt-md {
+    min-height: 4rem;
+  }
+}
+
+.footer-wrapper {
+  background-color: $app-background;
+  padding: 15px 0;
+
+  @include lt-sm {
+    padding: 5px 10px
+  }
+
+  mat-card {
+    background-color: $app-background-light;
+    color: $app-background;
+
+    h1 {
+      font-size: 1.2em;
+      margin-bottom: 5px;  
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        word-wrap: break-word;
+      }
+    }
+
+    .contact-info {
+      text-align: right;
+    }
+  }
+}
