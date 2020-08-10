@@ -40,3 +40,9 @@ mat-paginator.unknown-length {
     content: "+";
   }
 }
+
+snack-bar-container {
+  &.error {
+    color: $app-error;
+  }
+}
