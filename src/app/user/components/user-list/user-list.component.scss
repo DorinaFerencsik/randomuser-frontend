@@ -1,3 +1,20 @@
+@import '_mixins';
+
 .filter-container {
   margin-bottom: 30px;
+}
+
+.mat-column {
+  &-picture {
+    @include column-width(40px);
+
+    img {
+      border-radius: 50%;
+      width: 95%;
+    }
+  }
+
+  &-gender {
+    @include column-width(60px);
+  }
 }

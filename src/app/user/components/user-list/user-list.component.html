@@ -1,6 +1,6 @@
 <mat-card class="filter-container">
   <mat-card-header>
-    <mat-card-title>RandomUsers</mat-card-title>
+    <mat-card-title>User list</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
@@ -28,6 +28,7 @@
 <mat-card *ngIf="userList" class="user-container">
   <mat-card-content>
     <mat-paginator
+      class="unknown-length"
       [pageSize]="pagination.results"
       [pageIndex]="pagination.page - 1"
       [length]="dataLength"
@@ -36,32 +37,48 @@
       (page)="onPageChange($event)"
     ></mat-paginator>
     <mat-table [dataSource]="userList">
+      <ng-container matColumnDef="picture">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <img [src]="user.picture.thumbnail">
+        </mat-cell>
+      </ng-container>
+
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name.title}} {{element.name.first}} {{element.name.last}}</mat-cell>
+        <mat-cell *matCellDef="let user"> {{user.name.title}} {{user.name.first}} {{user.name.last}}</mat-cell>
       </ng-container>
 
       <!-- Gender -->
       <ng-container matColumnDef="gender">
         <mat-header-cell *matHeaderCellDef> Gender </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.gender}} </mat-cell>
+        <mat-cell *matCellDef="let user"> {{user.gender}} </mat-cell>
       </ng-container>
 
       <!-- Email -->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
       </ng-container>
 
       <!-- Address -->
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.location.postcode }} {{ element.location.country }} </mat-cell>
+        <mat-cell *matCellDef="let user"> {{ user.location.postcode }} {{ user.location.country }} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>
     </mat-table>
+    <mat-paginator
+      class="unknown-length"
+      [pageSize]="pagination.results"
+      [pageIndex]="pagination.page - 1"
+      [length]="dataLength"
+      [hidePageSize]="true"
+      [showFirstLastButtons]="false"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
   </mat-card-content>
 </mat-card>

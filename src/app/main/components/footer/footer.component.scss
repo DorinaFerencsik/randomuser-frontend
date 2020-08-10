@@ -1,9 +1,15 @@
 @import '_media-queries';
 
 :host {
-  height: 6rem;
+  min-height: 6rem;
 
   @include lt-md {
-    height: 4rem;
+    min-height: 4rem;
+  }
+}
+
+.footer-wrapper {
+  @include lt-sm {
+    padding: 5px 10px
   }
 }

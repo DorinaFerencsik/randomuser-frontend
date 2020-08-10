@@ -9,12 +9,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { EnumToArray } from './pipes/enum-to-array.pipe';
 
 const components = [];
 
 const vendorModules = [
+  FlexLayoutModule,
   ReactiveFormsModule,
   MatButtonModule,
   MatCardModule,
@@ -23,7 +26,8 @@ const vendorModules = [
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatTableModule
+  MatTableModule,
+  MatToolbarModule
 ];
 
 const pipes = [

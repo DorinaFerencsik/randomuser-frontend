@@ -19,6 +19,7 @@ import { LoadingService } from 'src/app/main/services/loading.service';
 export class UserListComponent implements OnInit {
   public readonly genders = Gender;
   public readonly tableColumns = [
+    'picture',
     'name',
     'gender',
     'email',
