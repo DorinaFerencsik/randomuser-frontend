@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, timer} from 'rxjs';
 import { takeWhile, tap, switchMap, map, takeLast } from 'rxjs/operators';
-import {
-  random as _random,
-  remove as _remove,
-  shuffle as _shuffle,
-  toSafeInteger as _toSafeInteger
-} from 'lodash';
+import { random as _random, shuffle as _shuffle } from 'lodash';
 
-import { primes, isPrime } from 'src/app/shared/utils/number.utils';
+import { primes, isPrime, removeNonDigits, splitToDigits } from 'src/app/shared/utils/number.utils';
 
 import { ApiUserService } from './api-user.service';
 import { IUser } from '../interfaces/user.interface';
@@ -25,7 +20,7 @@ export class UserService {
   /**
    * Listing users from API
    * @param params filtering parameters
-   * @param mock wether to use mock data or polling for getting users with right postcode.
+   * @param mock whether to use mock data or polling for getting users with right postcode.
    */
   public getUsers(params: IUserRequest, mock = false){
     return mock ? this.getMockedUsers(params) : this.getUsersWithPolling(params);
@@ -68,11 +63,16 @@ export class UserService {
 
   /**
    * Checking the number of primes in a given number.
-   * @TODO implement checking for 2 and higher digit numbers
    * @param value number to be checked
    */
-  private numberOfPrimes(value: number): number {
-    const digits = Array.from(value.toString()).map(Number);
+  private numberOfPrimes(value: number | string): number {
+    const cleaned = removeNonDigits(value.toString());
+    const digits = [];
+    for (let i = 1; i < cleaned.length; i++) {
+      digits.push(...splitToDigits(cleaned, i));
+    }
+    digits.push(cleaned);
+
     return digits
       .map(digit => isPrime(digit))
       .filter(prime => prime)
@@ -80,7 +80,7 @@ export class UserService {
   }
 
   /**
-   * Generating 4 digit postcodes with 2 prime numbers and one random value
+   * Generating 4 digit postcodes with 2 prime numbers and one random value.
    */
   private generatePostCode() {
     const parts = [
@@ -89,10 +89,6 @@ export class UserService {
       _random(9)
     ];
 
-    return _toSafeInteger(
-      _shuffle(parts)
-        .toString()
-        .replace(/,/g, '')
-      );
+    return _shuffle(parts).join('');
   }
 }

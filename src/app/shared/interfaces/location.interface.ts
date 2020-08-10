@@ -5,7 +5,7 @@ export interface ILocation {
     longitude: string,
   };
   country: string;
-  postcode: number;
+  postcode: number | string;
   state: string;
   street: {
     name: string,

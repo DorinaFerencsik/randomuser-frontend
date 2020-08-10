@@ -1,7 +1,7 @@
-import { random as _random, shuffle as _shuffle } from 'lodash';
+import { random as _random, shuffle as _shuffle, trimStart as _trimStart } from 'lodash';
 
 /**
- * Generates n random prime numbers
+ * Generates n random prime numbers.
  * @param digits number of digits of generated primes
  * @param n number of primes to return with
  */
@@ -42,4 +42,29 @@ export function isPrime(value: number): boolean {
     }
   }
   return value > 1;
+}
+
+/**
+ * Splits the given value into an array of numberical values (represented as strings), where every number has exactly 'digits' digits.
+ * Only matches numbers next to each other.
+ * @param value value to convert
+ * @param digits number of digits
+ */
+export function splitToDigits(value: string, digits = 2): string[] {
+  const singles = Array.from(value.toString()).map(Number);
+
+  return singles.map((v, index) =>
+    _trimStart(
+      singles.slice(index, index + digits).join(''),
+      '0'
+    )
+  ).filter(mapped => mapped.length === digits);
+}
+
+/**
+ * Removes every non digit character.
+ * @param value value to transform
+ */
+export function removeNonDigits(value: string): string {
+  return value.replace(/\D+/g, '');
 }
