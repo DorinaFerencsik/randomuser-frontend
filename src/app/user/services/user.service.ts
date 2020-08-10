@@ -50,15 +50,16 @@ export class UserService {
   private getMockedUsers(params: IUserRequest): Observable<IUser[]> {
     this.generatePostCode();
     return this.api.getUserList(params).pipe(
-      map((result) => (result.results.map(user => ({
-        ...user,
-        location: {
-          ...user.location,
-          postcode: this.generatePostCode(),
-        },
-      }),
-      )
-    )));
+        map((result) => (result.results.map(user => ({
+          ...user,
+          location: {
+            ...user.location,
+            postcode: this.generatePostCode(),
+          },
+        }),
+        )
+      ))
+    );
   }
 
   /**

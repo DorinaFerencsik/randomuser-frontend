@@ -14,8 +14,4 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ],
 })
-export class UserModule {
-  constructor() {
-    console.log('userModule loaded');
-  }
-}
+export class UserModule {}

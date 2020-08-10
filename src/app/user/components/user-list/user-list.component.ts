@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
+import { LoadingService } from 'src/app/main/services/loading.service';
 import { IPagination } from 'src/app/shared/interfaces/pagination.interface';
 
 import { Gender } from '../../enums/gender.enum';
 import { IUser } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
-import { LoadingService } from 'src/app/main/services/loading.service';
 
 @Component({
   selector: 'app-user-list',

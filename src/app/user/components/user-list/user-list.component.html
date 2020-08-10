@@ -46,25 +46,25 @@
         </mat-cell>
       </ng-container>
 
-      <!-- Name Column -->
+      <!-- Name column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{user.name.title}} {{user.name.first}} {{user.name.last}}</mat-cell>
       </ng-container>
 
-      <!-- Gender -->
+      <!-- Gender column -->
       <ng-container matColumnDef="gender">
         <mat-header-cell *matHeaderCellDef> Gender </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{user.gender}} </mat-cell>
       </ng-container>
 
-      <!-- Email -->
+      <!-- Email column -->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
       </ng-container>
 
-      <!-- Address -->
+      <!-- Address column -->
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{ user.location.postcode }} {{ user.location.country }} </mat-cell>
